@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Application.Abstractions.Providers;
 using Application.Enums;
 
+[assembly: InternalsVisibleTo("Application.UnitTests")]
 namespace Application.EmployeeDataProvider
 {
     internal class EmployeeDataProviderFactory : IEmployeeProviderFactory
