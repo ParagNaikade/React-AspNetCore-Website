@@ -16,7 +16,7 @@ export class Employees extends Component {
     }
 
     loadEmployeesFromServer() {
-        axios.get(`https://localhost:5001/api/employees?pageNumber=${this.state.currentPage + 1}&limit=10`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/employees?pageNumber=${this.state.currentPage + 1}&limit=10`)
             .then((response) => {
                 this.setState({
                     data: response.data.Employees,
@@ -33,8 +33,6 @@ export class Employees extends Component {
     }
 
     handlePageClick = (data) => {
-        console.log('onPageChange', data);
-
         this.setState({ currentPage: data.selected }, () => {
             this.loadEmployeesFromServer();
         });
@@ -104,14 +102,6 @@ export class Employees extends Component {
                                     }
                                     hrefAllControls
                                     forcePage={this.state.currentPage}
-                                    onClick={(clickEvent) => {
-                                        console.log('onClick', clickEvent);
-                                        // Return false to prevent standard page change,
-                                        // return false; // --> Will do nothing.
-                                        // return a number to choose the next page,
-                                        // return 4; --> Will go to page 5 (index 4)
-                                        // return nothing (undefined) to let standard behavior take place.
-                                    }}
                                 />
                             </nav>
                         </div>
