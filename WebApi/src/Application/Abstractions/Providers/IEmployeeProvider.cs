@@ -9,6 +9,6 @@ namespace Application.Abstractions.Providers
     {
         EmployeeDataSource DataSource { get; }
 
-        Task<IEnumerable<Employee>> GetEmployeesAsync(int pageNumber, int limit = 10);
+        Task<GetEmployeeResponse> GetEmployeesAsync(int pageNumber, int limit = 10);
     }
 }

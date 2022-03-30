@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Application.Abstractions.Providers;
 using Application.Enums;
 using AutoMapper;
+using Domain;
 
 namespace Infrastructure.Employees
 {
@@ -21,7 +22,7 @@ namespace Infrastructure.Employees
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<IEnumerable<Domain.Employee>> GetEmployeesAsync(int pageNumber, int limit)
+        public async Task<GetEmployeeResponse> GetEmployeesAsync(int pageNumber, int limit)
         {
             var path = Path.Combine(AppContext.BaseDirectory, @"Employees\MOCK_DATA.json");
 
@@ -29,8 +30,15 @@ namespace Infrastructure.Employees
 
             var employees = await JsonSerializer.DeserializeAsync<IEnumerable<Employee>>(fs);
 
-            var result = _mapper.Map<IEnumerable<Domain.Employee>>(employees);
-            return result.Skip((pageNumber - 1) * limit).Take(limit);
+            var result = _mapper.Map<List<Domain.Employee>>(employees);
+
+            return new GetEmployeeResponse
+            {
+                Employees = result.Skip((pageNumber - 1) * limit).Take(limit),
+                CurrentPage = pageNumber,
+                PageSize = limit,
+                TotalCount = result.Count,
+            };
         }
     }
 }
