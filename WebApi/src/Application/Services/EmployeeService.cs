@@ -17,7 +17,7 @@ namespace Application.Services
             _employeeProviderFactory = employeeProviderFactory ?? throw new ArgumentNullException(nameof(employeeProviderFactory));
         }
 
-        public async Task<IEnumerable<Employee>> GetEmployeesAsync(int pageNumber, int limit = 10)
+        public async Task<IEnumerable<Employee>> GetEmployeesAsync(int pageNumber, int limit)
         {
             var provider = _employeeProviderFactory.GetEmployeeProvider(EmployeeDataSource.Mock); // This could be passed from request to support both mock and live data
 
